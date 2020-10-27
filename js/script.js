@@ -1,17 +1,13 @@
-const firstInput = document.getElementById("name");
-
-//When the page first loads, the first text field should be in focus by default.
-window.addEventListener('DOMContentLoaded', (event) => {
-    firstInput.focus();
+window.addEventListener('DOMContentLoaded', () => {
+    document.getElementById("name").focus();
 });
-
 
 
 const selectJobRole = document.getElementById("title");
 // const otherOpt = selectJobRole.querySelector("[value='other']");
 
 // capture the other title text input
-const otherTitle = document.getElementById("other-title");
+const otherTitle = document.getElementById(" ");
 
 //hide the text input initially with JS in order to get this feature to work when JS is disabled
 otherTitle.style.display = "none";
