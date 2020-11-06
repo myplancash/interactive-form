@@ -7,7 +7,7 @@ const selectJobRole = document.getElementById("title");
 // const otherOpt = selectJobRole.querySelector("[value='other']");
 
 // capture the other title text input
-const otherTitle = document.getElementById(" ");
+const otherTitle = document.getElementById("other-title");
 
 //hide the text input initially with JS in order to get this feature to work when JS is disabled
 otherTitle.style.display = "none";
@@ -49,65 +49,42 @@ for(let i = 0; i < colorOpt.length; i++) {
   }
 }
 
-//Parsing html collection(colors) to an array and split it the colors with the Array.slice(start,end)
-/*     let colorsArr = Object.values(colorOpt);
-    console.log(colorsArr);
-    let jsPuns = colorsArr.slice(1,3);
-    console.log(jsPuns);
-    let loveJs = colorsArr.slice(4,7);
-    console.log(loveJs); */
 
 
-/* designOpt.addEventListener("change", (e) => {
-  let designSelected = e.target.value;
-  colorOptions.forEach((color, index) => {
-    if (designSelected === "js puns") {
-      colorOpt.disabled = false;
-      // colorOptions.value = "Cornflower Blue (JS Puns shirt only)";
-      if (index === 1 || index < 3) {
-        // let onlyPuns = color(0, 3);
-        color.style.display = 'block';
-        color(3, 6).style.display = "none";
-      }
-    } else if (designSelected === "heart js") {
-      colorOpt.disabled = false;
-      if (index >= 3) {
-        color.style.display = 'block';
-        color(0, 3).style.display = "none";
-      }
-    }
-  })
-}) */
+/*===================================
+======= T-Shirt Info section ========
+=====================================*/
+
 
 const showRightTheme = (theme) => {
-  if (theme === 'unselected'){
+  if (theme.textContent === 'Select Theme'){
     colorOpt.disabled = true;
   } else {
     colorOpt.disabled = false;
   }
 
   // helper function to display Colors
-    const showRightColor = (list) => {
-        //for all options in list display / else hide
-        colorOptions.forEach((color, index) => {
-            if(list.includes(color.value)){
-                color.style.display = 'block';
-            } else {
-                color.style.display = 'none';
-            }
-             //for all elements with selected attribute remove selected
-            if(color.hasAttribute('selected')){
-                color.removeAttribute('selected');
-            }
-        });
+  const showRightColor = (list) => {
+      //for all options in list display / else hide
+      colorOptions.forEach((color) => {
+          if(list.includes(color.value)){
+              color.style.display = 'block';
+          } else {
+              color.style.display = 'none';
+          }
+            //for all elements with selected attribute remove selected
+          if(color.hasAttribute('selected')){
+              color.removeAttribute('selected');
+          }
+      });
 
-        //grab the first color and set attribute to selected
-        colorOptions.forEach((color, index) => {
-            if(color.style.display === 'block'){
-              color.setAttribute('selected', true);
-            }
-        });
-    }
+      //grab the first color and set attribute to selected
+      colorOptions.forEach((color) => {
+          if(color.style.display === 'block'){
+            color.setAttribute('selected', true);
+          }
+      });
+  }
 
     //conditional for different design value possibilities
     if(theme === "js puns") {
@@ -125,3 +102,34 @@ designOpt.addEventListener('change', e => {
 });
 
 
+
+/*================================================
+======= ”Register for Activities” section ========
+==================================================*/
+
+const activities = document.querySelectorAll(".activities input");
+const activitiesLabel = document.querySelectorAll(".activities label");
+
+
+
+document.querySelector('.activities').addEventListener('change', (e) => {
+  let clicked = e.target;
+
+  let clickedDateAndTime = clicked.getAttribute("data-day-and-time");
+  console.log(clicked);
+  console.log(clickedDateAndTime);
+
+  for (let i = 0; i < activities.length; i++) {
+    let activityDateAndTime = activities[i].getAttribute("data-day-and-time")
+
+    if (clickedDateAndTime === activityDateAndTime && clicked!==activities[i]) {
+      activities[i].setAttribute("disabled", "true");
+      if (!clicked.checked) {
+        activities[i].removeAttribute("disabled");
+      }
+    }
+  }
+});
+/* document.getElementById('customMessageTextArea').setAttribute("disabled", "true");
+document.getElementById('customMessageTextArea').removeAttribute("disabled");
+document.getElementById('customMessageTextArea').focus(); */
