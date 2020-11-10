@@ -117,7 +117,7 @@ const activities = document.querySelectorAll(".activities input");
 const activitiesLabel = document.querySelectorAll(".activities label");
 
 
-const totalCostDiv = document.createElement("div");
+const totalCostDiv = document.createElement("h3");
 let totalCost = 0;
 activity.appendChild(totalCostDiv);
 
@@ -136,7 +136,7 @@ activity.addEventListener("change", (e) => {
     totalCost -= cost
   }
 
-  totalCostDiv.textContent = "Total: $" + totalCost;
+  totalCostDiv.textContent = `Total: $${totalCost}`
 
   for(let i = 0; i < checkboxes.length; i++) {
     let checkbox = checkboxes[i];
