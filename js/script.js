@@ -29,6 +29,14 @@ const designOpt = document.getElementById("design");
 // let colorOptions = document.getElementsByTagName("SELECT").namedItem("color");
 const colorOpt = document.getElementById("color");
 const colorOptions = document.querySelectorAll('#color option');
+const shirtColorDiv = document.getElementById("shirt-colors");
+
+
+
+/*===================================
+======= T-Shirt Info section ========
+=====================================*/
+
 
 let defaultOpt = document.createElement("option");
 defaultOpt.value = "";
@@ -39,7 +47,7 @@ colorOpt.insertBefore(defaultOpt,  colorOpt.firstElementChild);
 
 colorOpt.disabled = true;
 
-for(let i = 0; i < colorOpt.length; i++) {
+for(let i = 0; i < colorOptions.length; i++) {
   colors = colorOpt[i];
   // colors.slice(1, 6).hide();
   if (colors.textContent === "Please select a T-shirt theme") {
@@ -48,12 +56,6 @@ for(let i = 0; i < colorOpt.length; i++) {
     colors.style.display = "none";
   }
 }
-
-
-
-/*===================================
-======= T-Shirt Info section ========
-=====================================*/
 
 
 const showRightTheme = (theme) => {
@@ -69,6 +71,7 @@ const showRightTheme = (theme) => {
       colorOptions.forEach((color) => {
           if(list.includes(color.value)){
               color.style.display = 'block';
+              colorOpt.firstElementChild.style.display = "none";
           } else {
               color.style.display = 'none';
           }
@@ -103,33 +106,53 @@ designOpt.addEventListener('change', e => {
 
 
 
-/*================================================
-======= ”Register for Activities” section ========
-==================================================*/
 
+/*===============================================
+======= REGISTER FOR ACTIVITIES SECTION =========
+=================================================*/
+
+
+const activity = document.querySelector(".activities")
 const activities = document.querySelectorAll(".activities input");
 const activitiesLabel = document.querySelectorAll(".activities label");
 
 
+const totalCostDiv = document.createElement("div");
+let totalCost = 0;
+activity.appendChild(totalCostDiv);
 
-document.querySelector('.activities').addEventListener('change', (e) => {
+
+activity.addEventListener("change", (e) => {
   let clicked = e.target;
+  let cost = clicked.getAttribute("data-cost");
+   cost = parseInt(cost)
+  let dayAndTime = clicked.getAttribute("data-day-and-time");
+  const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+  console.log(checkboxes);
 
-  let clickedDateAndTime = clicked.getAttribute("data-day-and-time");
-  console.log(clicked);
-  console.log(clickedDateAndTime);
+  if (clicked.checked === true) {
+    totalCost += cost
+  } else if (clicked.checked === false) {
+    totalCost -= cost
+  }
 
-  for (let i = 0; i < activities.length; i++) {
-    let activityDateAndTime = activities[i].getAttribute("data-day-and-time")
+  totalCostDiv.textContent = "Total: $" + totalCost;
 
-    if (clickedDateAndTime === activityDateAndTime && clicked!==activities[i]) {
-      activities[i].setAttribute("disabled", "true");
+  for(let i = 0; i < checkboxes.length; i++) {
+    let checkbox = checkboxes[i];
+    let activityDateAndTime = checkbox.getAttribute("data-day-and-time")
+    if(dayAndTime === activityDateAndTime && clicked !== checkbox) {
+      checkbox.disabled = true;
+      checkbox.closest('label').style.color = 'DarkGrey';
+      checkbox.closest('label').style.textDecoration = "line-through";
       if (!clicked.checked) {
-        activities[i].removeAttribute("disabled");
+        checkbox.disabled = false;
+        checkbox.closest('label').style.color = 'initial';
+        checkbox.closest('label').style.textDecoration = "initial";
+      } else {
+        checkbox.disabled = true;
       }
     }
   }
-});
-/* document.getElementById('customMessageTextArea').setAttribute("disabled", "true");
-document.getElementById('customMessageTextArea').removeAttribute("disabled");
-document.getElementById('customMessageTextArea').focus(); */
+
+})
