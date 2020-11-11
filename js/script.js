@@ -221,7 +221,7 @@ const emailValidation = (e) => {
 }
 
 const nameValidation = (e) => {
- const nameValidator = /^[a-zA-Z]$/;
+ const nameValidator = /[a-zA-Z]+/;
   if(name.value === "" || name.value === "Name Required") {
     name.style.borderColor = "red";
     name.insertAdjacentHTML('afterend', '<span id="alert">Please put your Name</span>');
