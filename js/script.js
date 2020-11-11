@@ -233,6 +233,10 @@ const nameValidation = (e) => {
     emailInput.value = 'Please Use a Valid Name';
     e.preventDefault();
   }
+  email.addEventListener('click', () => {
+  email.style.borderColor = 'rgb(112, 157, 220)';
+  email.value = '';
+  })
 }
 
 
