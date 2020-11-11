@@ -161,12 +161,13 @@ activity.addEventListener("change", (e) => {
 =============  Payment info Section =============
 =================================================*/
 
+const paymentSection = document.querySelector("#payment");
 const payments = document.querySelectorAll("#payment option");
-const paypalDiv = document.querySelector("#paypal");
+const payPalDiv = document.querySelector("#paypal");
 const bitcoinDiv = document.querySelector("#bitcoin");
 const creditCardDiv = document.querySelector("#credit-card")
 
-paypalDiv.style.display = "none";
+payPalDiv.style.display = "none";
 bitcoinDiv.style.display = "none";
 payments[0].style.display = "none";
 payments[1].selected = true;
@@ -176,20 +177,67 @@ paymentSection.addEventListener("change", (e) => {
   if (clicked.value === "credit card") {
     creditCardDiv.style.display = "block";
     bitcoinDiv.style.display = "none";
-    paypalDiv.style.display = "none";
+    payPalDiv.style.display = "none";
   } else if (clicked.value === "bitcoin") {
     creditCardDiv.style.display = "none";
     bitcoinDiv.style.display = "block";
-    paypalDiv.style.display = "none";
+    payPalDiv.style.display = "none";
   } else if (clicked.value === "paypal") {
-    paypalDiv.style.display = "block";
+    payPalDiv.style.display = "block";
     bitcoinDiv.style.display = "none";
     creditCardDiv.style.display = "none";
   }
-
 })
 
 
+/*================================================
+===============  From Validation =================
+=================================================*/
+const form = document.querySelector("form")
+const email = document.querySelector("#mail");
+const name = document.querySelector("#name")
+
+const emailLabel = document.querySelector("label[for='mail']");
+
+const emailValidation = (e) => {
+
+  const emailValidator = /^\w+@[a-zA-Z]+\.(com|org|net|edu)$/;
+
+  if(email.value === "" || email.value === "Email Required") {
+    email.style.borderColor = "red";
+    email.insertAdjacentHTML('afterend', '<span id="div-alert">Please put your Email Address</span>');
+    document.querySelector("#div-alert").style.color = "red";
+    email.style.marginBottom = "0";
+    e.preventDefault();
+  } else if (emailValidator.test(email.value) === false && email.value.length >= 1) {
+    emailInput.style.borderColor = 'red';
+    emailInput.value = 'Please Use a Valid Email Address (dave@teamtreehouse.com)';
+    e.preventDefault();
+  }
+  email.addEventListener('click', () => {
+  email.style.borderColor = 'rgb(112, 157, 220)';
+  email.value = '';
+  })
+}
+
+const nameValidation = (e) => {
+ const nameValidator = /^[a-zA-Z]$/;
+  if(name.value === "" || name.value === "Name Required") {
+    name.style.borderColor = "red";
+    name.insertAdjacentHTML('afterend', '<span id="div-alert">Please put your Name</span>');
+    document.querySelector("#div-alert").style.color = "red";
+    name.style.marginBottom = "0";
+    e.preventDefault();
+  } else if (nameValidator.test(name) === false) {
+    emailInput.style.borderColor = 'red';
+    emailInput.value = 'Please Use a Valid Name';
+    e.preventDefault();
+  }
+}
 
 
 
+form.addEventListener('submit', (e) => {
+    emailValidation(e);
+    nameValidation(e);
+})
