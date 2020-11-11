@@ -156,3 +156,40 @@ activity.addEventListener("change", (e) => {
   }
 
 })
+
+/*===============================================
+=============  Payment info Section =============
+=================================================*/
+
+const payments = document.querySelectorAll("#payment option");
+const paypalDiv = document.querySelector("#paypal");
+const bitcoinDiv = document.querySelector("#bitcoin");
+const creditCardDiv = document.querySelector("#credit-card")
+
+paypalDiv.style.display = "none";
+bitcoinDiv.style.display = "none";
+payments[0].style.display = "none";
+payments[1].selected = true;
+
+paymentSection.addEventListener("change", (e) => {
+  let clicked = e.target;
+  if (clicked.value === "credit card") {
+    creditCardDiv.style.display = "block";
+    bitcoinDiv.style.display = "none";
+    paypalDiv.style.display = "none";
+  } else if (clicked.value === "bitcoin") {
+    creditCardDiv.style.display = "none";
+    bitcoinDiv.style.display = "block";
+    paypalDiv.style.display = "none";
+  } else if (clicked.value === "paypal") {
+    paypalDiv.style.display = "block";
+    bitcoinDiv.style.display = "none";
+    creditCardDiv.style.display = "none";
+  }
+
+})
+
+
+
+
+
