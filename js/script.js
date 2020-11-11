@@ -224,8 +224,8 @@ const nameValidation = (e) => {
  const nameValidator = /^[a-zA-Z]$/;
   if(name.value === "" || name.value === "Name Required") {
     name.style.borderColor = "red";
-    name.insertAdjacentHTML('afterend', '<span id="div-alert">Please put your Name</span>');
-    document.querySelector("#div-alert").style.color = "red";
+    name.insertAdjacentHTML('afterend', '<span id="alert">Please put your Name</span>');
+    document.querySelector("#alert").style.color = "red";
     name.style.marginBottom = "0";
     e.preventDefault();
   } else if (nameValidator.test(name) === false) {
