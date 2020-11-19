@@ -112,17 +112,17 @@ designOpt.addEventListener('change', e => {
 =================================================*/
 
 
-const activity = document.querySelector(".activities")
-const activities = document.querySelectorAll(".activities input");
+const activity = document.querySelector('.activities');
+const activitiesField = document.querySelector('.activities');
+
 const activitiesLabel = document.querySelectorAll(".activities label");
-
-
 const totalCostDiv = document.createElement("h3");
+
 let totalCost = 0;
-activity.appendChild(totalCostDiv);
+activitiesField.appendChild(totalCostDiv);
 
 
-activity.addEventListener("change", (e) => {
+activitiesField.addEventListener("change", (e) => {
   let clicked = e.target;
   let cost = clicked.getAttribute("data-cost");
    cost = parseInt(cost)
@@ -193,55 +193,80 @@ paymentSection.addEventListener("change", (e) => {
 /*================================================
 ===============  From Validation =================
 =================================================*/
+
 const form = document.querySelector("form")
 const email = document.querySelector("#mail");
-const name = document.querySelector("#name")
-
+const name = document.querySelector("#name");
 const emailLabel = document.querySelector("label[for='mail']");
 
-const emailValidation = (e) => {
 
-  const emailValidator = /^\w+@[a-zA-Z]+\.(com|org|net|edu)$/;
 
-  if(email.value === "" || email.value === "Email Required") {
-    email.style.borderColor = "red";
-    email.insertAdjacentHTML('afterend', '<span id="div-alert">Please put your Email Address</span>');
-    document.querySelector("#div-alert").style.color = "red";
-    email.style.marginBottom = "0";
-    e.preventDefault();
-  } else if (emailValidator.test(email.value) === false && email.value.length >= 1) {
-    emailInput.style.borderColor = 'red';
-    emailInput.value = 'Please Use a Valid Email Address (dave@teamtreehouse.com)';
-    e.preventDefault();
-  }
-  email.addEventListener('click', () => {
-  email.style.borderColor = 'rgb(112, 157, 220)';
-  email.value = '';
-  })
-}
-
-const nameValidation = (e) => {
- const nameValidator = /[a-zA-Z]+/;
-  if(name.value === "" || name.value === "Name Required") {
-    name.style.borderColor = "red";
-    name.insertAdjacentHTML('afterend', '<span id="alert">Please put your Name</span>');
-    document.querySelector("#alert").style.color = "red";
-    name.style.marginBottom = "0";
-    e.preventDefault();
-  } else if (nameValidator.test(name) === false) {
-    emailInput.style.borderColor = 'red';
-    emailInput.value = 'Please Use a Valid Name';
-    e.preventDefault();
-  }
-  email.addEventListener('click', () => {
-  email.style.borderColor = 'rgb(112, 157, 220)';
-  email.value = '';
-  })
+function emailValidation(e){
+    const emailValidator = /^\w+@[a-zA-Z]+\.(com|org|net|edu)$/;
+    if(email.value === '' || email.value === 'Email Required'){
+        email.style.borderColor = 'red';
+        email.value = 'Email Address Required';
+        e.preventDefault();
+    } else if(emailValidator.test(email.value) === false && email.value.length >= 1){
+      email.style.borderColor = 'red';
+      email.value = 'Please Use a Valid Email Address (email@email.com)';
+      e.preventDefault();
+    }
+    email.addEventListener('click', () => {
+    email.style.borderColor = 'rgb(112, 157, 220)';
+    email.value = '';
+    })
 }
 
 
+function nameValidation(e){
+    const validName = /[a-zA-Z]+/
+    if(name.value === '' || name.value === 'Name Required'){
+        name.style.borderColor = 'red';
+        name.value = 'Name Required';
+        e.preventDefault();
+    } else if(validName.test(name.value) === false && name.value.length >= 1){
+        name.style.borderColor = 'red';
+        name.value = 'Please Use Alphabetical Characters';
+        e.preventDefault();
+    }
+    name.addEventListener('click', () => {
+    name.style.borderColor = 'rgb(112, 157, 220)';
+    name.value = '';
+    })
+}
 
-form.addEventListener('submit', (e) => {
+const eventValidator = () => {
+    // Activities Validation Error Message
+    const activitiesCheckboxes = document.querySelectorAll('.activities input');
+
+    const activitiesError = document.createElement('p')
+    activitiesError.innerHTML = `<span style='color: red;'>Please choose at least one Activity!</span>`
+    activitiesError.className = 'activitiesValidationError'
+    activitiesError.style.display = 'none'
+    activity.appendChild(activitiesError)
+
+
+    let activitiesSelected = 0;
+
+    for(let i=0; i < activitiesCheckboxes.length; i++) {
+      if(activitiesCheckboxes[i].checked) {
+        activitiesSelected++
+      }
+    }
+    if(activitiesSelected === 0) {
+      return false;
+    } else {
+      return true;
+    }
+}
+
+function validator(){
+    form.addEventListener('submit', (e) => {
     emailValidation(e);
     nameValidation(e);
-})
+    eventValidator() ? document.querySelector('.activitiesValidationError').style.display = 'none' : document.querySelector('.activitiesValidationError').style.display = 'inherit';
+  })
+}
+
+validator();
